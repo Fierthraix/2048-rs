@@ -1,0 +1,6 @@
+[package]
+name = "game_2048"
+version = "0.1.0"
+authors = ["Lucas Rooyakkers <lucas.rooyakkers@drdc.rddc.gc.ca>"]
+
+[dependencies]
