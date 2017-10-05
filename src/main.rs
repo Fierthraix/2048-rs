@@ -1,7 +1,14 @@
 mod board;
+mod funcs;
 
 fn main() {
-    loop {}
+    let mut board = board::Board::new();
+    board.add_rand_block();
+    loop {
+        funcs::print_screen(&board);
+        funcs::get_key_input(&mut board);
+        board.add_rand_block();
+    }
 }
 
 // Loop{
