@@ -2,6 +2,7 @@ extern crate ncurses;
 
 mod funcs;
 mod board;
+mod display;
 
 use ncurses::*;
 use board::Board;

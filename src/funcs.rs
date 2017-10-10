@@ -1,4 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
+use display::*;
+use ncurses::*;
 
 // Terrible std_lib way to get random numbers
 pub fn rand_nanos() -> u32 {
@@ -8,16 +10,6 @@ pub fn rand_nanos() -> u32 {
         .subsec_nanos()
 }
 
-/*
-// State must be non-zero
-fn xorshift32(state: u32) -> u32 {
-    let mut x = state;
-    x ^= x << 13;
-    x ^= x >> 17;
-    x ^= x << 5;
-    x
-}
-*/
 
 // State must not be all zero
 pub fn xorshift128(state: &mut [u32; 4]) -> u32 {

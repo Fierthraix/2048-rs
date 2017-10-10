@@ -1,6 +1,6 @@
 use funcs::{rand_nanos, xorshift128};
 
-const SIZE: usize = 4;
+pub const SIZE: usize = 4;
 
 #[derive(PartialEq, Debug)]
 pub struct Board {
