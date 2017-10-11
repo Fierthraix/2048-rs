@@ -1,5 +1,3 @@
-use funcs::{rand_nanos, xorshift128};
-
 pub const SIZE: usize = 4;
 
 #[derive(PartialEq, Debug)]
@@ -173,4 +171,28 @@ impl Board {
     pub fn current_state<'a>(&'a self) -> (usize, &'a [[usize; SIZE]; SIZE]) {
         (self.score, &self.board)
     }
+}
+
+use std::time::{SystemTime, UNIX_EPOCH};
+
+/// Terrible std_lib way to get random numbers
+fn rand_nanos() -> u32 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .subsec_nanos()
+}
+
+/// State must not be all zero
+fn xorshift128(state: &mut [u32; 4]) -> u32 {
+    let mut t: u32 = state[3];
+    t ^= t << 11;
+    t ^= t << 8;
+    state[3] = state[2];
+    state[2] = state[1];
+    state[1] = state[0];
+    t ^= state[0];
+    t ^= state[0] >> 19;
+    state[0] = t;
+    t
 }

@@ -1,6 +1,5 @@
 extern crate ncurses;
 
-mod funcs;
 mod board;
 mod display;
 

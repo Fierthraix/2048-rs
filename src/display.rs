@@ -66,6 +66,7 @@ impl Number {
     }
 }
 
+/// Wrapper to print a string at a given x and y with certain attributes
 fn mvaddstr_attr(y: usize, x: usize, s: &str, attr: u32) {
     attron(attr as u32);
     mvaddstr(y as i32, x as i32, s);
@@ -170,28 +171,6 @@ impl Curses {
     pub fn draw(&self, b: &Board) {
         let (score, board) = b.current_state();
 
-        //self.draw_frame();
-        //self.draw_number(5, 5, Number::new(x), self.get_colour_pair(x));
-        //self.draw_tile(1, 1, 2222);
-        //self.draw_tile(1, 1, 4);
-
-        /*
-        let board = [
-            [2, 4, 8, 16],
-            [32, 65, 128, 256],
-            [512, 1024, 2048, 4096],
-            [8192, 16384, 32768, 65536],
-        ];
-
-        for i in 0..SIZE {
-            for j in 0..SIZE {
-                let x = (j * (self.tile_width + 1)) + 1;
-                let y = (i * (self.tile_height + 1)) + 1;
-                self.draw_tile(x, y, board[i][j]);
-            }
-        }
-        */
-
         self.draw_frame();
 
         // Draw each individual tile
@@ -202,7 +181,7 @@ impl Curses {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        //TODO: draw the score
+        mvaddstr(4, 73, score.to_string().as_ref());
     }
     /// Draw the frame for the entire board
     fn draw_frame(&self) {
@@ -246,7 +225,7 @@ impl Curses {
 
         }
     }
-    /// Draw a number using it's bitmap and attributes at a given position
+    /// Draw a number using its bitmap and attributes at a given position
     fn draw_number(&self, x: usize, y: usize, num: Number, attr: u32) {
         let mut bit = 0;
 
