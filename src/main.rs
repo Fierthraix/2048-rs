@@ -6,18 +6,24 @@ mod display;
 
 use ncurses::*;
 use board::Board;
+use display::Curses;
 
 fn main() {
     let mut board = Board::new();
+
     initscr();
+    start_color();
+    let c = Curses::new();
+
+    // Main game loop
     loop {
-        game_turn(&mut board);
+        c.draw(&board);
+        keyboard_input(&mut board);
+        //clear();
     }
 }
 
-fn game_turn(b: &mut Board) {
-    print_board(&b);
-
+fn keyboard_input(b: &mut Board) {
     loop {
         let fdsa = getch();
         match fdsa as u8 as char {
@@ -45,35 +51,4 @@ fn game_turn(b: &mut Board) {
         }
         break;
     }
-    clear();
 }
-
-fn print_board(b: &Board) {
-    let (score, grid) = b.current_state();
-    let mut string = String::with_capacity(10 * grid.len() * grid.len());
-
-    string.push_str(format!("{}\n", score).as_ref());
-
-    for i in 0..grid.len() {
-        string.push_str(format!("{:?}\n", grid[i]).as_ref());
-    }
-    printw(string.as_ref());
-}
-/*
-   let (score, grid) = b.current_state();
-   let mut string = String::with_capacity(10 * grid.len() * grid.len());
-
-   string.push_str(format!("Score: {}\n\n", score).as_ref());
-
-   for i in 0..grid.len() {
-   string.push_str("--------------------");
-   for j in 0..grid.len() {
-   let num = grid[i][j];
-   let num_len = grid[i][j] / 10 + 1;
-// for i in num_len push spaces and stuff
-string.push_str(format!("{}\n", grid[i][j]).as_ref());
-}
-}
-string.push_str("--------------------");
-printw(string.as_ref());
-*/

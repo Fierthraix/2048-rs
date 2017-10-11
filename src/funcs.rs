@@ -10,7 +10,6 @@ pub fn rand_nanos() -> u32 {
         .subsec_nanos()
 }
 
-
 // State must not be all zero
 pub fn xorshift128(state: &mut [u32; 4]) -> u32 {
     let mut t: u32 = state[3];
