@@ -48,8 +48,8 @@ impl Number {
             Number::NS => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         }
     }
-    fn formatted(num: usize) -> [Number; 4] {
-        let mut nums = [Number::NS; 4];
+    fn formatted(num: usize) -> [Number; SIZE] {
+        let mut nums = [Number::NS; SIZE];
         if num != 0 {
             let mut i;
             match num.to_string().len() {
@@ -184,13 +184,13 @@ impl Screen {
                 let px = x * (self.tile_width + 1);
                 let py = y * (self.tile_height + 1);
 
-                if x < 4 {
+                if x < SIZE {
                     for ppx in px..(px + self.tile_width + 2) {
                         mvaddstr_attr(py, ppx, " ", self.frame);
                     }
                 }
 
-                if y < 4 {
+                if y < SIZE {
                     for ppy in py..(py + self.tile_height + 1) {
                         mvaddstr_attr(ppy, px, " ", self.frame);
                     }
@@ -223,7 +223,7 @@ impl Screen {
     fn draw_number(&self, x: usize, y: usize, num: Number, attr: u32) {
         let mut bit = 0;
 
-        for i in 0..4 {
+        for i in 0..SIZE {
             for j in 0..5 {
                 if i != 0 {
                     bit = num.val()[j * 3 + (i - 1)];
