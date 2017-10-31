@@ -88,6 +88,9 @@ pub struct Screen {
 
 impl Screen {
     pub fn new() -> Self {
+        curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE); // Hide the cursor
+        noecho(); // Don't print input characters
+
         let mut attrs = Screen::get_attrs();
         Screen {
             foreground: attrs[12],
@@ -175,7 +178,7 @@ impl Screen {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        mvaddstr(4, 73, score.to_string().as_ref());
+        mvaddstr(33, 33, score.to_string().as_ref());
     }
     /// Draw the frame for the entire board
     fn draw_frame(&self) {
