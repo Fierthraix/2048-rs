@@ -5,32 +5,34 @@ mod display;
 
 use ncurses::*;
 use board::Board;
-use display::Curses;
+use display::Screen;
 
 fn main() {
     let mut board = Board::new();
 
-    initscr();
-    start_color();
-    let c = Curses::new();
+    initscr(); // Start curses
+    start_color(); // Allow colour
+
+    let c = Screen::new();
 
     // Main game loop
     loop {
         c.draw(&board);
         keyboard_input(&mut board);
-        //clear();
     }
 }
 
 fn keyboard_input(b: &mut Board) {
     loop {
-        let fdsa = getch();
-        match fdsa as u8 as char {
+        let input = getch();
+        // Get movement from wasd, hjkl, or arrow keys
+        match input as u8 as char {
+            // Get wasd or hjkl
             'w' | 'k' => b.up(),
             'a' | 'h' => b.left(),
             's' | 'j' => b.down(),
             'd' | 'l' => b.right(),
-            // Escape character
+            // Remove Escape Character
             '\x1b' => {
                 getch(); // Get rid of the '\x5b' ('[')
                 match getch() as u8 as char {

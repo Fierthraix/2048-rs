@@ -73,30 +73,26 @@ fn mvaddstr_attr(y: usize, x: usize, s: &str, attr: u32) {
     attroff(attr as u32);
 }
 
-pub struct Curses {
-    pub colours: Vec<attr_t>,
+pub struct Screen {
+    colours: Vec<attr_t>,
 
     //TODO: change these to constants of some sort
-    pub dark_foreground: u32,
-    pub light_foreground: u32,
-    pub frame: u32,
-    pub background: u32,
-    pub min_x: usize,
-    pub min_y: usize,
-    pub tile_height: usize,
-    pub tile_width: usize,
+    foreground: u32,
+    frame: u32,
+    background: u32,
+    //min_x: usize,
+    //min_y: usize,
+    tile_height: usize,
+    tile_width: usize,
 }
 
-impl Curses {
-    pub fn new() -> Curses {
-        let mut attrs = Curses::get_attrs();
-        Curses {
-            dark_foreground: attrs[12],
-            light_foreground: attrs[13],
-            frame: attrs[14],
-            background: attrs[15],
-            min_x: 80,
-            min_y: 24,
+impl Screen {
+    pub fn new() -> Self {
+        let mut attrs = Screen::get_attrs();
+        Screen {
+            foreground: attrs[12],
+            frame: attrs[13],
+            background: attrs[14],
             // TODO replace this
             tile_height: 7,
             tile_width: 17,
@@ -126,7 +122,6 @@ impl Curses {
                     (COLOR_BLACK, COLOR_RED), //1024
                     (COLOR_BLACK, COLOR_RED), //2048
                     (COLOR_BLACK, COLOR_BLACK), //dark fg
-                    (COLOR_BLACK, COLOR_BLACK), //light fg
                     (COLOR_BLACK, COLOR_BLACK), //frame
                     (COLOR_BLACK, COLOR_BLACK), //back
                 ];
@@ -146,14 +141,13 @@ impl Curses {
                     (7, 214),
                     (7, 9),
                     (0, 234),
-                    (0, 250),
                     (0, 240),
                     (0, 250),
                 ];
             }
-            for i in 0..16 {
+            for i in 0..colours.len() {
                 init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
-                color_list.push(COLOR_PAIR(i));
+                color_list.push(COLOR_PAIR(i as i16));
             }
         } else {
             // If there are no colors use the black/white default
@@ -235,7 +229,7 @@ impl Curses {
                     bit = num.val()[j * 3 + (i - 1)];
                 }
                 if bit == 1 {
-                    mvaddstr_attr(y + j, x + i, " ", self.dark_foreground);
+                    mvaddstr_attr(y + j, x + i, " ", self.foreground);
                 } else {
                     mvaddstr_attr(y + j, x + i, " ", attr);
                 }
