@@ -1,3 +1,5 @@
+use std::process;
+
 use board::{Board, SIZE};
 
 use ncurses::*;
@@ -163,7 +165,7 @@ impl Screen {
     }
     /// Draw the gameboard on the screen
     pub fn draw(&self, b: &Board) {
-        let (score, board) = b.current_state();
+        let (score, board, game_over) = b.current_state();
 
         self.draw_frame();
 
@@ -175,7 +177,20 @@ impl Screen {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        mvaddstr(33, 33, score.to_string().as_ref());
+        mvaddstr(33, 40, score.to_string().as_ref());
+
+        if game_over {
+            //TODO: q to quit, enter to restart
+            // Print Game Over
+            mvaddstr(33, 5, "GAME OVER (press 'q' to quit)");
+            // Exit game when enter is hit
+            loop {
+                match getch() as u8 as char {
+                    'q' => process::exit(0),
+                    _ => {}
+                }
+            }
+        }
     }
     /// Draw the frame for the entire board
     fn draw_frame(&self) {

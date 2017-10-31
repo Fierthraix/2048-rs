@@ -1,6 +1,6 @@
 pub const SIZE: usize = 4;
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Debug, Clone)]
 pub struct Board {
     board: [[usize; SIZE]; SIZE],
     board_zeros: usize,
@@ -168,8 +168,35 @@ impl Board {
             }
         }
     }
-    pub fn current_state<'a>(&'a self) -> (usize, &'a [[usize; SIZE]; SIZE]) {
-        (self.score, &self.board)
+    fn game_over(&self) -> bool {
+        let mut board = self.clone();
+        board.left();
+        if board.board != self.board {
+            return false;
+        }
+
+        let mut board = self.clone();
+        board.right();
+        if board.board != self.board {
+            return false;
+        }
+
+        let mut board = self.clone();
+        board.up();
+        if board.board != self.board {
+            return false;
+        }
+
+        let mut board = self.clone();
+        board.down();
+        if board.board != self.board {
+            return false;
+        }
+
+        true
+    }
+    pub fn current_state<'a>(&'a self) -> (usize, &'a [[usize; SIZE]; SIZE], bool) {
+        (self.score, &self.board, self.game_over())
     }
 }
 
@@ -195,4 +222,21 @@ fn xorshift128(state: &mut [u32; 4]) -> u32 {
     t ^= state[0] >> 19;
     state[0] = t;
     t
+}
+
+#[test]
+fn test_game_over() {
+    let board = Board {
+        seed: [0, 0, 0, 0],
+        board_zeros: 0,
+        score: 1143,
+        board: [
+            [3, 16, 4, 2],
+            [1, 4, 32, 16],
+            [3, 16, 128, 2],
+            [1, 4, 32, 4],
+        ],
+    };
+
+    assert_eq!(board.game_over(), true);
 }
