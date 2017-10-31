@@ -177,7 +177,7 @@ impl Screen {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        mvaddstr(33, 40, score.to_string().as_ref());
+        mvaddstr(33, 40, format!("SCORE: {}", score.to_string()).as_ref());
 
         if game_over {
             //TODO: q to quit, enter to restart
