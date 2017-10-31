@@ -88,9 +88,6 @@ pub struct Screen {
 
 impl Screen {
     pub fn new() -> Self {
-        curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE); // Hide the cursor
-        noecho(); // Don't print input characters
-
         let mut attrs = Screen::get_attrs();
         Screen {
             foreground: attrs[12],

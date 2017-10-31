@@ -12,6 +12,8 @@ fn main() {
 
     initscr(); // Start curses
     start_color(); // Allow colour
+    noecho(); // Don't print input characters
+    curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE); // Hide the cursor
 
     let c = Screen::new();
 
