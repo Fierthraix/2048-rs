@@ -107,10 +107,9 @@ impl Screen {
     fn get_attrs() -> Vec<attr_t> {
         let mut color_list = Vec::with_capacity(16);
         if has_colors() {
-            let colours;
-            if COLORS() != 256 {
+            let colours = if COLORS() != 256 {
                 // Using standard 16 colours
-                colours = [
+                vec![
                     (COLOR_BLACK, COLOR_BLACK), //0
                     (COLOR_BLACK, COLOR_WHITE), //2
                     (COLOR_BLACK, COLOR_CYAN), //4
@@ -126,10 +125,10 @@ impl Screen {
                     (COLOR_BLACK, COLOR_BLACK), //dark fg
                     (COLOR_BLACK, COLOR_BLACK), //frame
                     (COLOR_BLACK, COLOR_BLACK), //back
-                ];
+                ]
             } else {
                 // Use 256 colors when available
-                colours = [
+                vec![
                     (0, 240),
                     (0, 231),
                     (0, 229),
@@ -145,8 +144,8 @@ impl Screen {
                     (0, 234),
                     (0, 240),
                     (0, 250),
-                ];
-            }
+                ]
+            };
             for i in 0..colours.len() {
                 init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
                 color_list.push(COLOR_PAIR(i as i16));
@@ -185,9 +184,8 @@ impl Screen {
             mvaddstr(33, 5, "GAME OVER (press 'q' to quit)");
             // Exit game when enter is hit
             loop {
-                match getch() as u8 as char {
-                    'q' => process::exit(0),
-                    _ => {}
+                if let 'q' = getch() as u8 as char {
+                    process::exit(0)
                 }
             }
         }
@@ -226,8 +224,8 @@ impl Screen {
             let charnums = Number::formatted(val);
 
             let j = y + ((self.tile_height - 5) / 2);
-            for i in 0..charnums.len() {
-                self.draw_number(x + (i * 4), j, charnums[i], self.get_colour_pair(val));
+            for (i, charnum) in charnums.iter().enumerate() {
+                self.draw_number(x + (i * 4), j, *charnum, self.get_colour_pair(val));
             }
 
             //TODO: Draw the last row
@@ -261,7 +259,7 @@ impl Screen {
                 return self.colours[i];
             }
         }
-        return self.colours[0];
+        self.colours[0]
     }
 }
 

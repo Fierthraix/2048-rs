@@ -195,14 +195,14 @@ impl Board {
 
         true
     }
-    pub fn current_state<'a>(&'a self) -> (usize, &'a [[usize; SIZE]; SIZE], bool) {
+    pub fn current_state(&self) -> (usize, &[[usize; SIZE]; SIZE], bool) {
         (self.score, &self.board, self.game_over())
     }
 }
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
-/// Terrible std_lib way to get random numbers
+/// Terrible `std_lib` way to get random numbers
 fn rand_nanos() -> u32 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
