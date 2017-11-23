@@ -24,17 +24,13 @@ impl Board {
         let mut movement = false;
         for j in 0..SIZE {
             let mut row = [0; SIZE];
-            let mut k = 0;
-            for i in 0..SIZE {
+            for (k, i) in (0..SIZE).enumerate() {
                 row[k] = self.board[i][j];
-                k += 1;
             }
             if self.move_row(&mut row) {
                 movement = true;
-                let mut k = 0;
-                for i in 0..SIZE {
+                for (k, i) in (0..SIZE).enumerate() {
                     self.board[i][j] = row[k];
-                    k += 1;
                 }
             }
         }
@@ -46,17 +42,13 @@ impl Board {
         let mut movement = false;
         for j in 0..SIZE {
             let mut row = [0; SIZE];
-            let mut k = 0;
-            for i in (0..SIZE).rev() {
+            for (k, i) in (0..SIZE).rev().enumerate() {
                 row[k] = self.board[i][j];
-                k += 1;
             }
             if self.move_row(&mut row) {
                 movement = true;
-                let mut k = 0;
-                for i in (0..SIZE).rev() {
+                for (k, i) in (0..SIZE).rev().enumerate() {
                     self.board[i][j] = row[k];
-                    k += 1
                 }
             }
         }
@@ -84,17 +76,13 @@ impl Board {
         let mut movement = false;
         for i in 0..SIZE {
             let mut row = [0; SIZE];
-            let mut k = 0;
-            for j in (0..SIZE).rev() {
+            for (k, j) in (0..SIZE).rev().enumerate() {
                 row[k] = self.board[i][j];
-                k += 1;
             }
             if self.move_row(&mut row) {
                 movement = true;
-                let mut k = 0;
-                for j in (0..SIZE).rev() {
+                for (k, j) in (0..SIZE).rev().enumerate() {
                     self.board[i][j] = row[k];
-                    k += 1
                 }
             }
         }
