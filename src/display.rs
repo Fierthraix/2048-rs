@@ -148,11 +148,7 @@ impl Screen {
                 ]
             };
             for i in 0..colours.len() {
-                if use_default_colors() != ERR {
-                    init_pair(colours[i as usize].0, colours[i as usize].1, -1);
-                } else {
-                    init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
-                }
+                init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
                 color_list.push(COLOR_PAIR(i as i16));
             }
         } else {
