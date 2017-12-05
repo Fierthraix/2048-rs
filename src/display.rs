@@ -105,6 +105,7 @@ impl Screen {
         }
     }
     fn get_attrs() -> Vec<attr_t> {
+        start_color();
         let mut color_list = Vec::with_capacity(16);
         if has_colors() {
             let colours = if COLORS() != 256 {
@@ -147,7 +148,11 @@ impl Screen {
                 ]
             };
             for i in 0..colours.len() {
-                init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
+                if use_default_colors() != ERR {
+                    init_pair(colours[i as usize].0, colours[i as usize].1, -1);
+                } else {
+                    init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
+                }
                 color_list.push(COLOR_PAIR(i as i16));
             }
         } else {

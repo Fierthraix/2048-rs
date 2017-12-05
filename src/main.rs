@@ -11,8 +11,11 @@ fn main() {
     let mut board = Board::new();
 
     initscr(); // Start curses
-    start_color(); // Allow colour
+    savetty(); // Save the terminal
+    nonl(); // Disable enter-key newline translation for faster cursor
+    cbreak(); // Interactive mode
     noecho(); // Don't print input characters
+    leaveok(stdscr(), true); //TODO: find out what htis is
     curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE); // Hide the cursor
 
     let c = Screen::new();
