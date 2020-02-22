@@ -14,7 +14,7 @@ impl Board {
         let mut b = Board {
             board: [[0; SIZE]; SIZE],
             board_zeros: SIZE * SIZE,
-            seed: seed,
+            seed,
             score: 0,
         };
         b.add_rand_block();
@@ -90,7 +90,7 @@ impl Board {
             self.add_rand_block();
         }
     }
-    fn move_row(&mut self, row: &mut [usize; SIZE]) -> (bool) {
+    fn move_row(&mut self, row: &mut [usize; SIZE]) -> bool {
         let mut movement = false;
         let mut zeros_count = 0;
         // First pass to count zeros and unite appropriate blocks

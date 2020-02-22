@@ -35,8 +35,8 @@ impl Number {
             _ => Number::NS,
         }
     }
-    fn val(&self) -> [u8; 15] {
-        match *self {
+    fn val(self) -> [u8; 15] {
+        match self {
             Number::N0 => [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1],
             Number::N1 => [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
             Number::N2 => [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
