@@ -170,6 +170,7 @@ impl Screen {
         self.draw_frame();
 
         // Draw each individual tile
+        #[allow(clippy::needless_range_loop)]
         for i in 0..SIZE {
             for j in 0..SIZE {
                 let x = (j * (self.tile_width + 1)) + 1;
@@ -177,7 +178,7 @@ impl Screen {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        mvaddstr(33, 40, format!("SCORE: {}", score.to_string()).as_ref());
+        mvaddstr(33, 40, format!("SCORE: {}", score).as_ref());
 
         if game_over {
             //TODO: q to quit, enter to restart
