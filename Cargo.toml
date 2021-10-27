@@ -1,4 +1,5 @@
 [package]
+edition = "2021"
 name = "game_2048"
 version = "0.1.0"
 authors = ["Lucas Rooyakkers <lucas.rooyakkers@protonmail.com>"]

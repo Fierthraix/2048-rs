@@ -1,6 +1,6 @@
 use std::process;
 
-use board::{Board, SIZE};
+use crate::board::{Board, SIZE};
 
 use ncurses::*;
 
