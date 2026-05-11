@@ -111,21 +111,21 @@ impl Screen {
             let colours = if COLORS() != 256 {
                 // Using standard 16 colours
                 vec![
-                    (COLOR_BLACK, COLOR_BLACK), //0
-                    (COLOR_BLACK, COLOR_WHITE), //2
-                    (COLOR_BLACK, COLOR_CYAN), //4
-                    (COLOR_BLACK, COLOR_BLUE), //8
-                    (COLOR_BLACK, COLOR_GREEN), //16
-                    (COLOR_BLACK, COLOR_YELLOW), //32
+                    (COLOR_BLACK, COLOR_BLACK),   //0
+                    (COLOR_BLACK, COLOR_WHITE),   //2
+                    (COLOR_BLACK, COLOR_CYAN),    //4
+                    (COLOR_BLACK, COLOR_BLUE),    //8
+                    (COLOR_BLACK, COLOR_GREEN),   //16
+                    (COLOR_BLACK, COLOR_YELLOW),  //32
                     (COLOR_BLACK, COLOR_MAGENTA), //64
-                    (COLOR_BLACK, COLOR_RED), //12r
-                    (COLOR_BLACK, COLOR_RED), //256
-                    (COLOR_BLACK, COLOR_RED), //512
-                    (COLOR_BLACK, COLOR_RED), //1024
-                    (COLOR_BLACK, COLOR_RED), //2048
-                    (COLOR_BLACK, COLOR_BLACK), //dark fg
-                    (COLOR_BLACK, COLOR_BLACK), //frame
-                    (COLOR_BLACK, COLOR_BLACK), //back
+                    (COLOR_BLACK, COLOR_RED),     //12r
+                    (COLOR_BLACK, COLOR_RED),     //256
+                    (COLOR_BLACK, COLOR_RED),     //512
+                    (COLOR_BLACK, COLOR_RED),     //1024
+                    (COLOR_BLACK, COLOR_RED),     //2048
+                    (COLOR_BLACK, COLOR_BLACK),   //dark fg
+                    (COLOR_BLACK, COLOR_BLACK),   //frame
+                    (COLOR_BLACK, COLOR_BLACK),   //back
                 ]
             } else {
                 // Use 256 colors when available
@@ -155,9 +155,9 @@ impl Screen {
             // If there are no colors use the black/white default
             for i in 0..16 {
                 if i == 0 {
-                    color_list.push(A_NORMAL());
+                    color_list.push(A_NORMAL);
                 } else {
-                    color_list.push(A_REVERSE());
+                    color_list.push(A_REVERSE);
                 }
             }
         }
@@ -210,7 +210,6 @@ impl Screen {
                         mvaddstr_attr(ppy, px, " ", self.frame);
                     }
                 }
-
             }
         }
     }
@@ -231,7 +230,6 @@ impl Screen {
             }
 
             //TODO: Draw the last row
-
         }
     }
     /// Draw a number using its bitmap and attributes at a given position

@@ -3,9 +3,9 @@ extern crate ncurses;
 mod board;
 mod display;
 
-use ncurses::*;
 use board::Board;
 use display::Screen;
+use ncurses::*;
 
 fn main() {
     let mut board = Board::new();
@@ -49,7 +49,6 @@ fn keyboard_input(b: &mut Board) {
                         continue;
                     }
                 }
-
             }
             _ => {
                 continue;
