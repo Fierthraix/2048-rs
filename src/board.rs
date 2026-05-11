@@ -133,7 +133,7 @@ impl Board {
     }
     fn add_rand_block(&mut self) {
         // 1 in 8 odds it will be a 4 instead of a 2
-        let num = if xorshift128(&mut self.seed) % 8 == 0 {
+        let num = if xorshift128(&mut self.seed).is_multiple_of(8) {
             4
         } else {
             2
@@ -226,5 +226,5 @@ fn test_game_over() {
         ],
     };
 
-    assert_eq!(board.game_over(), true);
+    assert!(board.game_over());
 }

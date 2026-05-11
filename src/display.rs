@@ -70,9 +70,9 @@ impl Number {
 
 /// Wrapper to print a string at a given x and y with certain attributes
 fn mvaddstr_attr(y: usize, x: usize, s: &str, attr: u32) {
-    attron(attr as u32);
-    mvaddstr(y as i32, x as i32, s);
-    attroff(attr as u32);
+    attron(attr);
+    let _ = mvaddstr(y as i32, x as i32, s);
+    attroff(attr);
 }
 
 pub struct Screen {
@@ -147,8 +147,8 @@ impl Screen {
                     (0, 250),
                 ]
             };
-            for i in 0..colours.len() {
-                init_pair(i as i16, colours[i as usize].0, colours[i as usize].1);
+            for (i, colour) in colours.iter().enumerate() {
+                init_pair(i as i16, colour.0, colour.1);
                 color_list.push(COLOR_PAIR(i as i16));
             }
         } else {
@@ -178,12 +178,12 @@ impl Screen {
                 self.draw_tile(x, y, board[i][j]);
             }
         }
-        mvaddstr(33, 40, format!("SCORE: {}", score).as_ref());
+        let _ = mvaddstr(33, 40, format!("SCORE: {}", score).as_ref());
 
         if game_over {
             //TODO: q to quit, enter to restart
             // Print Game Over
-            mvaddstr(33, 5, "GAME OVER (press 'q' to quit)");
+            let _ = mvaddstr(33, 5, "GAME OVER (press 'q' to quit)");
             // Exit game when enter is hit
             loop {
                 if let 'q' = getch() as u8 as char {
